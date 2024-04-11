@@ -1,1 +1,1 @@
-package fukuro
+package main
