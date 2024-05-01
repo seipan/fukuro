@@ -5,6 +5,8 @@ import (
 	"os"
 	"os/exec"
 	"syscall"
+
+	"github.com/urfave/cli"
 )
 
 func Run() {
@@ -95,6 +97,10 @@ func Usage() {
 }
 
 func main() {
+
+	app := cli.NewApp()
+	app.Name = "fukuro"
+	app.Usage = "fukuro is a simple container runtime"
 	if len(os.Args) <= 1 {
 		Usage()
 	}
