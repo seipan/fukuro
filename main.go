@@ -1,10 +1,8 @@
-//go:build linux
-// +build linux
-
 package fukuro
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"syscall"
@@ -51,7 +49,18 @@ func InitContainer() error {
 	if err := syscall.Sethostname([]byte("container")); err != nil {
 		return fmt.Errorf("Setting hostname failed: %w", err)
 	}
-	if err := syscall.Mount("proc", "/root/rootfs/proc", "proc", uintptr(syscall.MS_NOEXEC|syscall.MS_NOSUID|syscall.MS_NODEV), ""); err != nil {
+
+	if err := os.MkdirAll("/sys/fs/cgroup/cpu/my-container", 0700); err != nil {
+		return fmt.Errorf("Cgroups namespace my-container create failed: %w", err)
+	}
+	if err := ioutil.WriteFile("/sys/fs/cgroup/cpu/my-container/tasks", []byte(fmt.Sprintf("%d\n", os.Getpid())), 0644); err != nil {
+		return fmt.Errorf("Cgroups register tasks to my-container namespace failed: %w", err)
+	}
+	if err := ioutil.WriteFile("/sys/fs/cgroup/cpu/my-container/cpu.cfs_quota_us", []byte("1000\n"), 0644); err != nil {
+		return fmt.Errorf("Cgroups add limit cpu.cfs_quota_us to 1000 failed: %w", err)
+	}
+
+	if err := syscall.Mount("proc", "/root/rootfs/proc", "proc", syscall.MS_NOEXEC|syscall.MS_NOSUID|syscall.MS_NODEV, ""); err != nil {
 		return fmt.Errorf("Proc mount failed: %w", err)
 	}
 	if err := os.Chdir("/root"); err != nil {
