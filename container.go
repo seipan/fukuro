@@ -12,3 +12,8 @@ func startContainer(context *cli.Context) (int, error) {
 	}
 	return 0, nil
 }
+
+func runContaier(context *cli.Context) (int, error) {
+	internal.Run()
+	return 0, nil
+}
