@@ -6,15 +6,6 @@ import (
 	"syscall"
 )
 
-type CreateOpts struct {
-	CgroupName       string
-	UseSystemdCgroup bool
-	NoPivotRoot      bool
-	NoNewKeyring     bool
-	RootlessEUID     bool
-	RootlessCgroups  bool
-}
-
 func Create() error {
 	if err := syscall.Sethostname([]byte("container")); err != nil {
 		return fmt.Errorf("Setting hostname failed: %w", err)
