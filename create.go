@@ -10,7 +10,22 @@ import (
 var createCommand = cli.Command{
 	Name:  "create",
 	Usage: "create a container",
-	Flags: []cli.Flag{},
+	Flags: []cli.Flag{
+		cli.StringFlag{
+			Name:  "bundle, b",
+			Value: "",
+			Usage: `path to the root of the bundle directory defaults to the current directory`,
+		},
+		cli.StringFlag{
+			Name:  "pid-file",
+			Value: "",
+			Usage: "specify the file to write the process id to",
+		},
+		cli.BoolFlag{
+			Name:  "no-pivot",
+			Usage: "do not use pivot root to jail process inside rootfs.  This should be used whenever the rootfs is on top of a ramdisk",
+		},
+	},
 	Action: func(context *cli.Context) error {
 		status, err := startContainer(context)
 		if err == nil {
