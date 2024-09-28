@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/seipan/fukuro/internal"
+	"github.com/seipan/fukuro/internal/utils"
 	"github.com/urfave/cli"
 )
 
@@ -27,6 +29,10 @@ var createCommand = cli.Command{
 		},
 	},
 	Action: func(context *cli.Context) error {
+		if err := utils.CheckArgs(context, 1, internal.ExactArgs); err != nil {
+			return err
+		}
+
 		status, err := startContainer(context)
 		if err == nil {
 			os.Exit(status)

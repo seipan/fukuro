@@ -1,4 +1,4 @@
-package fukuro
+package internal
 
 const (
 	ExactArgs = iota
