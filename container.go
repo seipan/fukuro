@@ -2,10 +2,15 @@ package fukuro
 
 import (
 	"github.com/seipan/fukuro/internal"
+	"github.com/seipan/fukuro/internal/utils"
 	"github.com/urfave/cli"
 )
 
 func startContainer(context *cli.Context) (int, error) {
+	if err := utils.RevisePidFile(context); err != nil {
+		return -1, err
+	}
+
 	err := internal.Create()
 	if err != nil {
 		return 1, err
