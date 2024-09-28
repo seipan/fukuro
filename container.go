@@ -11,7 +11,12 @@ func startContainer(context *cli.Context) (int, error) {
 		return -1, err
 	}
 
-	err := internal.Create()
+	_, err := utils.SetupSpec(context)
+	if err != nil {
+		return 1, err
+	}
+
+	err = internal.Create()
 	if err != nil {
 		return 1, err
 	}
