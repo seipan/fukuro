@@ -6,7 +6,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-func startContainer(context *cli.Context) (int, error) {
+func createContainer(context *cli.Context) (int, error) {
 	if err := utils.RevisePidFile(context); err != nil {
 		return -1, err
 	}

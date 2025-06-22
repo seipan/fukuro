@@ -33,7 +33,7 @@ var createCommand = cli.Command{
 			return err
 		}
 
-		status, err := startContainer(context)
+		status, err := createContainer(context)
 		if err == nil {
 			os.Exit(status)
 		}

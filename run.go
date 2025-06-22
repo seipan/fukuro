@@ -12,7 +12,7 @@ var runCommand = cli.Command{
 	Usage: "run a container",
 	Flags: []cli.Flag{},
 	Action: func(context *cli.Context) error {
-		status, err := startContainer(context)
+		status, err := createContainer(context)
 		if err == nil {
 			os.Exit(status)
 		}
