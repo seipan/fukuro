@@ -1,5 +1,0 @@
-package fukuro
-
-func init() {
-
-}

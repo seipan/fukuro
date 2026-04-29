@@ -1,9 +1,7 @@
-package fukuro
+package main
 
 import (
-	"fmt"
-	"os"
-
+	"github.com/seipan/fukuro/internal"
 	"github.com/urfave/cli"
 )
 
@@ -12,10 +10,7 @@ var runCommand = cli.Command{
 	Usage: "run a container",
 	Flags: []cli.Flag{},
 	Action: func(context *cli.Context) error {
-		status, err := createContainer(context)
-		if err == nil {
-			os.Exit(status)
-		}
-		return fmt.Errorf("runc run failed: %w", err)
+		internal.Run()
+		return nil
 	},
 }
